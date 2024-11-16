@@ -24,12 +24,14 @@ jobs:
         
     - name: Deploy to Server
       uses: appleboy/ssh-action@master
-      with:
+      env:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
+        run: |
           cd /var/www/frontend
           git pull origin main
           npm install
           pm2 restart frontend
+          EOF
+          rm ssh_key
